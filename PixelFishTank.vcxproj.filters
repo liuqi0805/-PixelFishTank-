@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4B04-88EB-625FBE52EBFB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="第三方">
+      <UniqueIdentifier>{A1C2D3E4-5F60-4712-8B90-1234567890AB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源描述">
+      <UniqueIdentifier>{C3D4E5F6-1122-3344-5566-778899AABBCC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\App.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\main.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\Persist.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\Renderer.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\Simulation.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\Sprite.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\Ui.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\Util.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\Weather.cpp"><Filter>源文件</Filter></ClCompile>
+    <ClCompile Include="src\third_party\cJSON.c"><Filter>第三方</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\App.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\Common.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\JsonExt.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\Model.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\Persist.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\Renderer.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\ResourceManager.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\Simulation.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\Sprite.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\Ui.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\Util.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\Weather.h"><Filter>头文件</Filter></ClInclude>
+    <ClInclude Include="src\third_party\cJSON.h"><Filter>第三方</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="src\app.manifest"><Filter>资源描述</Filter></Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="README.md"><Filter>资源描述</Filter></Text>
+    <Text Include="docs\assets资源目录说明.md"><Filter>资源描述</Filter></Text>
+    <Text Include="docs\json配置样例与注释.md"><Filter>资源描述</Filter></Text>
+    <Text Include="docs\工程配置说明.md"><Filter>资源描述</Filter></Text>
+  </ItemGroup>
+</Project>
