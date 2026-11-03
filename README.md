@@ -52,6 +52,7 @@
 | Per-Monitor 高 DPI | `src/main.cpp` + `src/app.manifest` | `DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2`；`WM_DPICHANGED` 跟随系统建议矩形 |
 | 水体空白处拖动窗口 | `App::OnLeftButtonDown` / `OnDragMove` | 命中水体且不在鱼/按钮/菜单上时进入拖动 |
 | 窗口尺寸固定（不提供缩放） | `App::Init` | 只算一次「当前显示器面积 / 24」的 4:3 尺寸；存档只恢复位置，不恢复尺寸；拖拽缩放整体移除 |
+| 悬停鱼显示参数列表 | `Ui::FishStatsRect` / `Ui::DrawFishStats` | 贴在鱼身左右侧（放不下就换边），4 行：饱食/肥胖/心情/状态，参数名左列、数值在右；**无背景、只有文字**（文字带 0.7px 黑影保证可读），只显示、不参与命中 |
 | 缩放用最近邻、像素不糊 | `Renderer::GetBitmap` + `DrawBitmapNearest` | `SetAntialiasMode(ALIASED)`、`D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR` |
 | 退出存盘 / 启动读盘 | `src/Persist.cpp` | `state.json` 写在 exe 同级目录（不可写时退到 `%LOCALAPPDATA%\PixelFishTank`） |
 | 资源全部外部化 | `src/ResourceManager.cpp` | 启动扫 `assets/fish`、`assets/plant`、`assets/ui` 下的子目录 |
@@ -66,6 +67,7 @@
 | 死亡播死亡动画、不再响应交互、延时清除 | 同上 | 30 秒后清除，空位可新增鱼 |
 | 交互优先级 鱼 > 面板 > 穿透 | `Ui::HitTest` | 菜单 > ☰ 入口 > 缩放角标/边缘 > 鱼按钮 > 鱼碰撞盒 > 面板按钮 > 水体 > 穿透 |
 | 悬停鱼出【喂食 / 挑逗】 | `Ui::UpdateLayout` / `App::HandleAction` | 按钮画在鱼上方，避开水面就翻到下方 |
+| 悬停鱼出参数列表 | `Ui::FishStatsRect` / `Ui::DrawFishStats` | 贴在鱼身左右侧，4 行：饱食 / 肥胖 / 心情 / 状态；名字左列、数值在右；**无面板背景，纯文字**；不参与命中 |
 | 悬停水体出【增氧器 / 加温棒】面板 | 同上 | 面板固定在水体左上角 |
 | 右键菜单 8 项 | `Ui::BuildMenu` | 添加水草、添加鱼、清空鱼缸、重置环境、锁定鼠标穿透、开机自启、关闭到托盘、退出 |
 | Direct2D 管线、60fps、最近邻 | `src/Renderer.cpp` + `App::RenderLoop` | 渲染顺序：水体 → 水草 → 设备 → 鱼 → UI |
@@ -87,7 +89,7 @@
 
 ## 2. 构建
 
-### 2.1 目标环境（按需求）
+### 2.1 目标环境
 
 - Visual Studio 2022（v143 工具集）
 - Windows SDK **10.0.22621**
@@ -99,7 +101,7 @@
 msbuild PixelFishTank.sln /m /p:Configuration=Release /p:Platform=x64
 ```
 
-### 2.2 用 `build.ps1`（推荐，会自动兜底）
+### 2.2 用 `build.ps1`
 
 ```powershell
 # 默认 Release|x64
@@ -211,12 +213,13 @@ PixelFishTank\
 
 ## 7. 已验证 / 未验证
 
-自动化脚本 + 截图实际验过的：
+自动化脚本验过的：
 
 - 编译通过（Release x64），启动生成窗口，`state.json` 正常落盘、下次启动能读回（窗口位置/尺寸/鱼/水草/设备/环境都还原）。
 - 透明区域能看到并点穿到桌面图标（截图里桌面图标就是透出来的）。
 - 悬停鱼 → 出按钮；点【喂食】→ `satiety` 从 ~70 涨到 97.9（`tools/interaction_probe.py`）。
 - 悬停水体 → 出面板；点【增氧器】→ `equipment.aerator = true`、气泡出现、toast 提示。
+- 悬停鱼 → 鱼身旁边出现小参数面板（`_preview/stat.png` 验证过：饱食 70% / 肥胖 0% / 心情 80% / 状态 正常），鼠标移开即消失。
 - 右键菜单 / ☰ 常驻菜单（11 项，含「关闭到托盘」）正常绘制与点击。
 - 拖动移动（窗口 rect 精确平移 60,40）、右下角缩放（453×339 → 543×407，保持 4:3）。
 - 尺寸固定：453×339（= 屏幕面积/24 的 4:3），拖角落/右边缘/底边缘都不变（已回归）。
